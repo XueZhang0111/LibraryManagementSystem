@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.iit.cs425.dao.DocumentMapper">
+    <resultMap id="myDoc" type="edu.iit.cs425.bean.Document">
+        <id column="document_id"  property="documentID" />
+        <result column="title"  property="title" />
+        <result column="total_copy_amount"  property="copyAmount" />
+        <result column="doc_type" property="type"/>
+    </resultMap>
+
+    <insert id="createDocument" useGeneratedKeys="true" keyProperty="documentID"
+            parameterType="edu.iit.cs425.bean.Document" >
+        insert into doc(title, total_copy_amount, doc_type)
+        values (#{title}, #{copyAmount}, #{type})
+    </insert>
+
+    <insert id="createDocKeyword" useGeneratedKeys="true" keyProperty="keyID"
+            parameterType="edu.iit.cs425.bean.Keyword" >
+        insert into keyword(words)
+        values (#{words})
+    </insert>
+
+    <insert id="createDocClassification" useGeneratedKeys="true" keyProperty="classID"
+            parameterType="edu.iit.cs425.bean.Classification" >
+        insert into classification(phrase)
+        values (#{phrase})
+    </insert>
+
+    <insert id="createPublisher" useGeneratedKeys="true" keyProperty="publisher_id"
+            parameterType="edu.iit.cs425.bean.Publisher">
+        insert into publisher(publisher_name)
+        values (#{publisher_name})
+    </insert>
+
+    <insert id="createAuthor" useGeneratedKeys="true" keyProperty="author_id"
+            parameterType="edu.iit.cs425.bean.Author">
+        insert into author(aname)
+        values (#{author_id})
+    </insert>
+
+
+    <select id="queryDocByTitle" resultMap="myDoc">
+        select * from doc where title = #{title}
+    </select>
+
+    <select id="queryKeyByWord" resultType="edu.iit.cs425.bean.Keyword">
+        select * from keyword where words = #{word}
+    </select>
+
+    <select id="queryClassifyByName" resultType="edu.iit.cs425.bean.Classification">
+        select * from classification where phrase = #{phrase}
+    </select>
+
+    <select id="queryPublishByName" resultType="edu.iit.cs425.bean.Publisher">
+        select * from publisher where publish_name = #{publish_name}
+    </select>
+
+    <select id="queryAuthorByName" resultType="edu.iit.cs425.bean.Author">
+        select * from author where aname = #{aname}
+    </select>
+
+    <select id="getDocs" resultMap="myDoc">
+        select * from doc;
+    </select>
+
+    <delete id="deleteDocById">
+        delete from doc where document_id = #{id}
+    </delete>
+
+    <update id="updateDocById" parameterType="edu.iit.cs425.bean.Document">
+        update doc
+        set document_id=#{documentID}, title=#{title}, total_copy_amount=#{copyAmount},
+            doc_type = #{type}
+        where document_id = #{documentID}
+    </update>
+
+    <select id="queryDocById" resultMap="myDoc">
+        select * from doc where document_id = #{id}
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
